@@ -99,7 +99,7 @@ for take in range(3):
 <h2><span class="n">4</span>Avatar: lip-sync your own video with LatentSync</h2>
 <div class="meta"><b>Tool</b><span><a href="https://github.com/bytedance/LatentSync">LatentSync 1.5</a> (ByteDance, open source) on Kaggle T4</span><b>Input</b><span>a video of you talking calmly to the camera (any text), as long as the voice; 25 fps; plus the voice from step 3</span><b>Speed</b><span>~45 min of GPU per 1 min of video</span></div>
 <p>Kaggle runs Python 3.13, LatentSync needs 3.10. So the notebook builds its own small environment first:</p>
-<pre><code>!git clone -q https://github.com/bytedance/LatentSync /kaggle/ls &amp;&amp; cd /kaggle/ls
+<pre><code>!git clone -q https://github.com/bytedance/LatentSync /kaggle/ls
 %cd /kaggle/ls
 !pip install -q uv &amp;&amp; uv venv -q -p 3.10 /kaggle/env &amp;&amp; uv pip install -q -p /kaggle/env/bin/python -r requirements.txt huggingface_hub
 !/kaggle/env/bin/python -c "from huggingface_hub import hf_hub_download as d; [d('ByteDance/LatentSync-1.5', f, local_dir='checkpoints') for f in ['whisper/tiny.pt','latentsync_unet.pt']]"
