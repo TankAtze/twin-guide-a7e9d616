@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>AI Twin Guide</title>
+<meta name="description" content="Step by step: make an AI-presented explainer video with your own cloned face and voice, using only free tools.">
+<!-- Classmate guide behind the part 2 QR. Self-contained (no external files), so it can be hosted anywhere as one file. -->
+<style>
+:root { --ground: #f5f3ee; --panel: #ffffff; --ink: #111418; --muted: #4a4f57; --line: #d9d6cf;
+        --pdm: #2b59ff; --plm: #e4570f; --bad: #c62a2d; --good: #1d7a46; --code: #ece9e2; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --ground: #15171a; --panel: #1f2226; --ink: #eceae6; --muted: #a9adb3; --line: #33373d;
+        --pdm: #6f8dff; --plm: #ff8a4c; --bad: #ff6b6e; --good: #4cc387; --code: #2a2e33; }
+}
+:root[data-theme="dark"] { --ground: #15171a; --panel: #1f2226; --ink: #eceae6; --muted: #a9adb3; --line: #33373d;
+        --pdm: #6f8dff; --plm: #ff8a4c; --bad: #ff6b6e; --good: #4cc387; --code: #2a2e33; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--ground); color: var(--ink); font: 17px/1.55 -apple-system, "Segoe UI", Inter, Roboto, sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 32px 16px 80px; }
+h1 { font-size: 34px; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 10px; }
+h2 { font-size: 24px; margin: 44px 0 6px; letter-spacing: -0.01em; }
+h2 .n { display: inline-block; min-width: 34px; height: 34px; line-height: 34px; text-align: center; border-radius: 9px;
+        background: var(--ink); color: var(--ground); font-size: 18px; margin-right: 10px; vertical-align: 2px; }
+p, li { margin: 6px 0; }
+.lead { color: var(--muted); font-size: 18px; }
+.meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; background: var(--panel); border: 1px solid var(--line);
+        border-radius: 12px; padding: 12px 14px; margin: 12px 0; font-size: 16px; }
+.meta b { color: var(--muted); font-weight: 600; }
+.box { border-left: 5px solid; border-radius: 8px; padding: 10px 14px; margin: 12px 0; background: var(--panel); font-size: 16px; }
+.check { border-color: var(--good); } .fail { border-color: var(--bad); } .tip { border-color: var(--pdm); }
+.box b:first-child { display: block; }
+pre { background: var(--code); border-radius: 10px; padding: 12px 14px; overflow-x: auto; font-size: 13.5px; line-height: 1.45; }
+code { font-family: ui-monospace, Menlo, Consolas, monospace; }
+p code, li code { background: var(--code); padding: 1px 5px; border-radius: 5px; font-size: 0.9em; }
+a { color: var(--pdm); }
+.chain { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0; }
+.chain span { background: var(--panel); border: 2px solid var(--ink); border-radius: 8px; padding: 3px 10px; font-weight: 700; font-size: 15px; }
+blockquote { margin: 10px 0; padding: 8px 14px; border-left: 4px solid var(--line); color: var(--muted); font-style: italic; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; margin: 10px 0; }
+td, th { border-bottom: 1px solid var(--line); padding: 7px 6px; text-align: left; vertical-align: top; }
+footer { margin-top: 50px; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 14px; }
+</style>
+</head>
+<body>
+<main>
+<h1>Make an explainer video with your own AI twin, for €0</h1>
+<p class="lead">This is how we made our PDM/PLM video. Every tool is free. You need a laptop, a phone, and about 30 free cloud GPU hours per week from Kaggle.</p>
+<div class="chain"><span>1 Research</span><span>2 Script</span><span>3 Voice</span><span>4 Avatar</span><span>5 Visuals</span><span>6 Music + edit</span></div>
+
+<div class="box fail"><b>Before you start: consent</b>Clone only your own face and voice, or someone who agreed in writing. Tell your audience at the end that it was AI.</div>
+
+<h2><span class="n">1</span>Research: pick free tools</h2>
+<div class="meta"><b>Tool</b><span>Any LLM with web search: Gemini, ChatGPT, Claude. They are interchangeable here.</span><b>Cost</b><span>free tier</span></div>
+<p>A broad question gives a long, generic list. Ours:</p>
+<blockquote>Research what tools you actually need to produce the video. Evaluate whether they have a free trial, student version, or free credits, so that we do not spend money.</blockquote>
+<p>The LLM does not know your limits. Learn the basics first, find your bottleneck, then ask about it. Ours was GPU power (laptops are too weak for video AI). This follow-up found Kaggle, which made everything else possible:</p>
+<blockquote>Is there a way to use some compute for the lip-sync models, maybe also a free tier?</blockquote>
+<div class="box check"><b>Human check</b>Some "free" tools in the LLM's list were not free. Free tiers change every few months. Open each tool and check the limits yourself. In our case: HeyGen free = 3 videos × 1 min with a watermark; ElevenLabs free = no voice cloning.</div>
+
+<h2><span class="n">2</span>Script: write it for speaking</h2>
+<div class="meta"><b>Tool</b><span>LLM + your own fact check</span><b>Length</b><span>~130-150 words per minute</span></div>
+<div class="box tip"><b>Main learning: context in = quality out</b>When the LLM wrote our script from scratch, even a detailed prompt needed round after round of fixes. Better: decide where you want to go, write a rough draft yourself, then let the LLM polish it.</div>
+<ul>
+<li>Start with a real story (ours: the Airbus A380 cables that were too short, 2006).</li>
+<li>Short sentences. One idea per sentence. Contractions ("didn't", "it's").</li>
+<li>Copy the structure of YouTube explainers you like (hook, promise, chapters, recap). Never copy their footage.</li>
+<li>Make a second "TTS version" for the voice AI: write numbers and acronyms as words ("A three-eighty", "two thousand six", "P-D-M").</li>
+</ul>
+<div class="box check"><b>Human check</b>Every number needs a source. If sources disagree, say it vaguely ("billions").</div>
+<div class="box fail"><b>Our mistake</b>We built visuals before the script was final and had to redo several scenes. Lock the script first.</div>
+
+<h2><span class="n">3</span>Voice: clone yourself with Chatterbox</h2>
+<div class="meta"><b>Tool</b><span><a href="https://github.com/resemble-ai/chatterbox">Chatterbox</a> (open source, MIT) on <a href="https://www.kaggle.com">Kaggle</a> notebooks</span><b>Cost</b><span>free; Kaggle needs phone verification for GPUs</span><b>Input</b><span>15-30 s of your voice, clean, in the language and energy of the video</span></div>
+<ol>
+<li>Record 60-90 s with your phone (quiet room, phone 20-30 cm away). Speak like a YouTuber: awake, a bit faster than normal. Cut a clean 18 s piece.</li>
+<li>Kaggle: create a notebook, Settings → Accelerator → <b>GPU T4</b>. Upload the clip as a dataset.</li>
+<li>Run this (one sentence per call; 3 takes per sentence, keep the best):</li>
+</ol>
+<pre><code>!pip install -q chatterbox-tts==0.1.7 torchvision==0.21.0 "setuptools&lt;81"
+import torch, torchaudio
+from chatterbox.tts import ChatterboxTTS
+tts = ChatterboxTTS.from_pretrained(device="cuda")
+REF = "/kaggle/input/my-voice/ref_18s.wav"
+line = "In two thousand six, Airbus had a problem."
+for take in range(3):
+    torch.manual_seed(take)
+    wav = tts.generate(line, audio_prompt_path=REF, exaggeration=0.5, cfg_weight=0.5)
+    torchaudio.save(f"/kaggle/working/line01_t{take}.wav", wav, tts.sr)</code></pre>
+<ul>
+<li><code>exaggeration</code> 0.5 / <code>cfg_weight</code> 0.5 sounded most natural for us. Higher exaggeration = more energy, but more odd words.</li>
+<li>Join the takes with short pauses (0.3 s between sentences, 0.6 s between paragraphs) in any audio editor or ffmpeg.</li>
+<li>Speed on a T4: about 1 min of audio per 1 min of GPU. On a laptop without NVIDIA GPU it was 7× slower than real time.</li>
+</ul>
+<div class="box fail"><b>What failed for us</b>The pinned <code>torchvision==0.21.0</code> is needed; without it Kaggle fails with "torchvision::nms does not exist". "A380" came out as "A3080" until we wrote "A three-eighty".</div>
+<div class="box check"><b>Human check</b>Listen to every sentence. Our automatic check (speech-to-text) once picked a take that skipped "In 2006". Only listening caught it.</div>
+
+<h2><span class="n">4</span>Avatar: lip-sync your own video with LatentSync</h2>
+<div class="meta"><b>Tool</b><span><a href="https://github.com/bytedance/LatentSync">LatentSync 1.5</a> (ByteDance, open source) on Kaggle T4</span><b>Input</b><span>a video of you talking calmly to the camera (any text), as long as the voice; 25 fps; plus the voice from step 3</span><b>Speed</b><span>~45 min of GPU per 1 min of video</span></div>
+<p>Kaggle runs Python 3.13, LatentSync needs 3.10. So the notebook builds its own small environment first:</p>
+<pre><code>!git clone -q https://github.com/bytedance/LatentSync /kaggle/ls &amp;&amp; cd /kaggle/ls
+%cd /kaggle/ls
+!pip install -q uv &amp;&amp; uv venv -q -p 3.10 /kaggle/env &amp;&amp; uv pip install -q -p /kaggle/env/bin/python -r requirements.txt huggingface_hub
+!/kaggle/env/bin/python -c "from huggingface_hub import hf_hub_download as d; [d('ByteDance/LatentSync-1.5', f, local_dir='checkpoints') for f in ['whisper/tiny.pt','latentsync_unet.pt']]"
+!/kaggle/env/bin/python -m scripts.inference \
+  --unet_config_path configs/unet/stage2.yaml --inference_ckpt_path checkpoints/latentsync_unet.pt \
+  --inference_steps 20 --guidance_scale 1.5 --enable_deepcache \
+  --video_path /kaggle/input/my-face/clip.mp4 --audio_path /kaggle/input/my-face/voice.wav \
+  --video_out_path /kaggle/working/avatar.mp4</code></pre>
+<ul>
+<li>Longer than ~1 min? Cut video + voice into pieces at pauses and run one notebook per piece. Kaggle free allows only <b>2 GPU notebooks at the same time</b>.</li>
+<li>Pick calm footage: no hands near the face, no big head turns.</li>
+<li>Show the avatar small (a facecam in the corner). Lip-sync errors are hard to see at that size.</li>
+</ul>
+<div class="box fail"><b>Don't</b>Make a second HeyGen account for more free minutes or remove its watermark. Both break their terms.</div>
+
+<h2><span class="n">5</span>Visuals: animation as code + a free 3D model</h2>
+<div class="meta"><b>Tools</b><span><a href="https://github.com/heygen-com/hyperframes">HyperFrames</a> (HTML/CSS → video, Apache 2.0), <a href="https://www.blender.org">Blender</a> (3D), <a href="https://sketchfab.com">Sketchfab</a> (free models)</span></div>
+<ul>
+<li>HyperFrames: <code>npx hyperframes init</code>, write each scene as an HTML page with GSAP animation, <code>npx hyperframes render</code> gives an MP4. A coding agent can write the scenes for you; describe one idea per scene and review every render.</li>
+<li>3D: Sketchfab → filter "Downloadable" → check the license → Download 3D Model → <b>glTF</b>. Import in Blender (File → Import → glTF).</li>
+<li>Light background, thick dark text, min. 30 px at 1080p: it stays readable on a beamer.</li>
+</ul>
+<div class="box tip"><b>Our lesson from feedback</b>"If the blue and orange line is meant to be a cable … that's not understandable at all." Show the real object, big. One idea per scene.</div>
+<div class="box check"><b>Human check: license</b>Use only CC0 or CC BY models (no "NonCommercial", no "NoAI"). Credit CC BY authors on screen. Ours: <i>E-bike model: "electric cycle" by adeelafzal2015, CC BY 4.0, Sketchfab.</i></div>
+
+<h2><span class="n">6</span>Music + edit</h2>
+<div class="meta"><b>Tools</b><span>HyperFrames master file + <a href="https://ffmpeg.org">ffmpeg</a>; music: Gemini "Create music" or Google Flow Music</span></div>
+<p>AI music always wants to be epic. Say what you do <b>not</b> want. Our prompt v1 ("light, curious and optimistic, around 110 BPM") sounded like a product launch. v2 worked:</p>
+<blockquote>Calm, understated instrumental background music for a YouTube explainer video. Focused and thoughtful, not happy or euphoric. Around 90 BPM. Soft muted beat, warm pads, a simple repeating plucked or piano motif, deep soft bass. Low energy that stays the same from start to end: no build-up, no drop, no big melody. It should sit quietly in the background under a voice.</blockquote>
+<ul>
+<li>Get word times from your voice with Whisper (free, local) and start each animation on its word.</li>
+<li>Put the avatar video on top, muted (the voice track is already in the timeline).</li>
+<li>Sound effects: free sound sites need an account and a license check per sound. We generated ours with a short Python script (noise sweeps, beeps): no license needed.</li>
+<li>Final mix: voice at about -16 LUFS, music ~20 dB lower and quieter while someone speaks.</li>
+</ul>
+<pre><code>ffmpeg -i master.mp4 -i music.wav -filter_complex "[1]volume=-20dB[m];[0:a][m]amix=inputs=2:duration=first:normalize=0" -c:v copy final.mp4</code></pre>
+<div class="box check"><b>Human check</b>Watch the whole video with sound on the screen you will present on. Then do a blind test: show it to a few people and ask "Is this person real?"</div>
+
+<h2>Do / Don't / Human check</h2>
+<table>
+<tr><th>Do</th><th>Don't</th><th>A human must check</th></tr>
+<tr><td>Clone only yourself</td><td>Clone anyone without consent</td><td>Facts and numbers</td></tr>
+<tr><td>Check licenses, credit CC BY</td><td>Bend free-tier rules</td><td>Every voice line, by ear</td></tr>
+<tr><td>Numbers as words for voice AI</td><td>Trust an auto-check alone</td><td>Lip-sync at final size</td></tr>
+<tr><td>Lock the script first</td><td></td><td>Consent + license</td></tr>
+</table>
+
+<footer>
+Group project, Operations Management Systems, topic PDM/PLM. Credit: E-bike model "electric cycle" by adeelafzal2015, CC BY 4.0, Sketchfab.<br>
+Tool limits as of November 2026. Check them again before you start.
+</footer>
+</main>
+</body>
+</html>
